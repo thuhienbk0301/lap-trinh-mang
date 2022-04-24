@@ -47,11 +47,11 @@ int main(int argc, char* argv[])
         // localhost
         dwRetval = getaddrinfo(argv[1], NULL, &hints, &result);
         if (dwRetval != 0) {
-            if (dwRetval == 11001) { // If the error code is 11001 => the input domain name is not valid
+            if (dwRetval == 11001) { // Loi 11001 => Domain khong hop le
                 printf("Not found information\n");
                 return 0;
             }
-            printf("getaddrinfo failed with error: %d\n", dwRetval); // Otherwise there was another error
+            printf("getaddrinfo failed with error: %d\n", dwRetval); // cac loi con lai
             WSACleanup();
             return 1;
         }
@@ -100,7 +100,7 @@ int main(int argc, char* argv[])
     ULARGE_INTEGER freeSpace;
     //LPDWORD lpSectorsPerCluster, lpBytesPerSector, lpNumberOfFreeClusters, lpTotalNumberOfClusters;
 
-    // Find out how big a buffer we needs
+    // Kich thuoc buffer
     cchBuffer = GetLogicalDriveStrings(0, NULL);
 
     driveStrings = (WCHAR*)malloc((cchBuffer + 1) * sizeof(TCHAR));
@@ -110,13 +110,13 @@ int main(int argc, char* argv[])
         return -1;
     }
 
-    // Fetch all drive strings    
+    // 
     GetLogicalDriveStrings(cchBuffer, driveStrings);
     
 
     while (*driveStrings)
     {
-        // Dump drive information
+        // 
         GetDiskFreeSpaceEx(driveStrings, &freeSpace, NULL, NULL);
         /*printf("%s\n", driveStrings);*/
 
@@ -125,8 +125,6 @@ int main(int argc, char* argv[])
 
         strcat(buf, driveInformation);
 
-        // Move to next drive string
-        // +1 is to move past the null at the end of the string.
         driveStrings += lstrlen(driveStrings) + 1;
     }
 
