@@ -109,6 +109,12 @@ DWORD WINAPI ClientThread(LPVOID lpParam)
 		strcat(div1, "</body></html>");
 		send(client, div1, strlen(div1), 0);
 	}
+	else
+	{
+		// Tra lai ket qua
+		const char* res = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<html><body><h1>Invalid!</h1></body></html>";
+		send(client, res, strlen(res), 0);
+	}
 
 	closesocket(client);
 	return 0;
